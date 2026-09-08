@@ -14,6 +14,24 @@ import type { CourseWithEditions } from "@/contracts";
  */
 export const SEED_DATA = true;
 
+/**
+ * Enquanto os dados forem de demonstração, o site NÃO mostra publicamente
+ * nenhum número inventado — preço, vaga ou data — nem aceita pré-inscrições
+ * que não vão a lado nenhum.
+ *
+ * O motivo é simples: wilit.ao é o endereço comercial da empresa. Um preço
+ * fictício numa página pública vira uma expectativa no cliente, e um
+ * formulário que descarta submissões faz a pessoa julgar que reservou lugar
+ * enquanto a WIL IT nunca soube que ela existiu.
+ *
+ * Os programas, a duração e a modalidade são reais e ficam visíveis: dão
+ * valor comercial à página e o interesse é encaminhado para os canais que
+ * já funcionam — email e WhatsApp.
+ *
+ * Passa a false no WP-A.12, quando houver preços reais e persistência.
+ */
+export const DADOS_PUBLICAVEIS = false;
+
 const iso = (d: string) => new Date(d).toISOString();
 const NOW = iso("2026-09-01T08:00:00Z");
 

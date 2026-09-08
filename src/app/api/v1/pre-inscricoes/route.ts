@@ -5,7 +5,7 @@ import {
   type PreInscricaoResposta,
 } from "@/contracts";
 import { computeSeats } from "@/lib/seats";
-import { COURSES } from "@/data/courses";
+import { COURSES, DADOS_PUBLICAVEIS } from "@/data/courses";
 
 /**
  * Recepção de pré-inscrições — implementação simulada do WP-A.05.
@@ -34,6 +34,20 @@ function proximosDiasUteis(dias: number): Date {
 let contador = 41;
 
 export async function POST(request: Request) {
+  // Defesa em profundidade: esconder o formulário na interface não chega,
+  // porque qualquer pessoa pode fazer POST directamente. Enquanto não houver
+  // persistência, o servidor recusa em vez de aceitar e deitar fora.
+  if (!DADOS_PUBLICAVEIS) {
+    return NextResponse.json(
+      {
+        erro: "inscricoes_fechadas",
+        mensagem:
+          "As inscrições online ainda não estão activas. Contacte-nos por email para geral@wilit.ao ou pelo WhatsApp +244 975 698 019.",
+      },
+      { status: 503 }
+    );
+  }
+
   let body: unknown;
   try {
     body = await request.json();

@@ -10,7 +10,8 @@ import { Card, CardBody } from "@/components/ui/card";
 import { SeatsMeter } from "@/components/seats-indicator";
 import { computeSeats } from "@/lib/seats";
 import { formatDate } from "@/lib/utils";
-import { COURSES, SEED_DATA } from "@/data/courses";
+import { ContactoCTA } from "@/components/contacto-cta";
+import { COURSES, DADOS_PUBLICAVEIS } from "@/data/courses";
 import { AREA_LABEL, MODALITY_LABEL } from "@/contracts";
 
 export const metadata: Metadata = {
@@ -55,12 +56,19 @@ export default async function PreInscricaoPage({
               ← Voltar ao curso
             </Link>
             <h1 className="mt-4 max-w-[26ch] text-3xl font-bold text-text-primary sm:text-4xl">
-              {seats.status === "full"
-                ? "Entrar na lista de espera"
-                : "Reservar o seu lugar"}
+              {!DADOS_PUBLICAVEIS
+                ? "Reservar o seu lugar"
+                : seats.status === "full"
+                  ? "Entrar na lista de espera"
+                  : "Reservar o seu lugar"}
             </h1>
             <p className="mt-3 max-w-[62ch] text-lg text-text-secondary">
-              {seats.status === "full" ? (
+              {!DADOS_PUBLICAVEIS ? (
+                <>
+                  Fale connosco e reservamos o seu lugar na próxima turma.{" "}
+                  <strong>Não paga nada agora.</strong>
+                </>
+              ) : seats.status === "full" ? (
                 <>
                   Esta turma está cheia. Deixe os seus dados e contactamos assim
                   que houver uma desistência ou abrir nova edição.
@@ -76,18 +84,28 @@ export default async function PreInscricaoPage({
         </div>
 
         <div className="mx-auto max-w-6xl px-5 py-10">
-          {SEED_DATA && (
-            <div className="mb-8 rounded-[--radius-card] border border-accent-solid/40 bg-accent-soft px-4 py-3">
-              <p className="text-sm text-text-primary">
-                <strong>Ambiente de demonstração.</strong> Este formulário valida
-                os dados mas ainda não os regista. Nenhuma inscrição submetida
-                aqui chega à WIL IT.
-              </p>
-            </div>
-          )}
-
           <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_340px]">
-            <PreEnrollmentForm course={course} edition={edition} />
+            {DADOS_PUBLICAVEIS ? (
+              <PreEnrollmentForm course={course} edition={edition} />
+            ) : (
+              <div className="flex flex-col gap-5">
+                <div className="rounded-[--radius-card] border border-line-strong bg-surface-sunken p-5">
+                  <h2 className="font-semibold text-text-primary">
+                    As inscrições online abrem em breve
+                  </h2>
+                  <p className="mt-2 text-[0.9375rem] text-text-secondary">
+                    Estamos a preparar a inscrição online. Até lá, garantimos o
+                    seu lugar da forma mais rápida: fale connosco e tratamos de
+                    tudo — programa, datas, valor e factura.
+                  </p>
+                </div>
+                <ContactoCTA
+                  assunto={course.title}
+                  titulo="Garanta o seu lugar"
+                  texto="Diga-nos qual a formação que lhe interessa e enviamos-lhe as datas da próxima turma e o valor."
+                />
+              </div>
+            )}
 
             <aside className="order-first flex flex-col gap-4 lg:order-last lg:sticky lg:top-24 lg:self-start">
               <Card>
@@ -107,13 +125,15 @@ export default async function PreInscricaoPage({
                   <dl className="flex flex-col gap-2 border-t border-line-subtle pt-4 text-sm text-text-secondary">
                     <div className="flex items-start gap-2">
                       <CalendarDays className="mt-0.5 size-4 shrink-0 text-text-muted" aria-hidden="true" />
-                      <dd className="tnum">
-                        {formatDate(edition.startDate)} a {formatDate(edition.endDate)}
+                      <dd className={DADOS_PUBLICAVEIS ? "tnum" : undefined}>
+                        {DADOS_PUBLICAVEIS
+                          ? `${formatDate(edition.startDate)} a ${formatDate(edition.endDate)}`
+                          : "Datas sob consulta"}
                       </dd>
                     </div>
                     <div className="flex items-start gap-2">
                       <Clock className="mt-0.5 size-4 shrink-0 text-text-muted" aria-hidden="true" />
-                      <dd>{edition.schedule}</dd>
+                      <dd>{DADOS_PUBLICAVEIS ? edition.schedule : "Horário a combinar"}</dd>
                     </div>
                     <div className="flex items-start gap-2">
                       <MapPin className="mt-0.5 size-4 shrink-0 text-text-muted" aria-hidden="true" />
@@ -128,9 +148,11 @@ export default async function PreInscricaoPage({
                     </div>
                   </dl>
 
-                  <div className="border-t border-line-subtle pt-4">
-                    <SeatsMeter seats={seats} />
-                  </div>
+                  {DADOS_PUBLICAVEIS && (
+                    <div className="border-t border-line-subtle pt-4">
+                      <SeatsMeter seats={seats} />
+                    </div>
+                  )}
                 </CardBody>
               </Card>
 

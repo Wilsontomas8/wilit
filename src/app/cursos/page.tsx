@@ -3,7 +3,7 @@ import Link from "next/link";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { CourseCard } from "@/components/course-card";
-import { getPublishedCourses, SEED_DATA } from "@/data/courses";
+import { getPublishedCourses, DADOS_PUBLICAVEIS } from "@/data/courses";
 import { cn } from "@/lib/utils";
 import {
   AREA_LABEL,
@@ -143,12 +143,11 @@ export default async function CatalogoPage({
         </div>
 
         <div className="mx-auto max-w-6xl px-5 py-10">
-          {SEED_DATA && (
-            <div className="mb-8 rounded-[--radius-card] border border-accent-solid/40 bg-accent-soft px-4 py-3">
-              <p className="text-sm text-text-primary">
-                <strong>Conteúdo de demonstração.</strong> Os programas são reais,
-                mas preços, datas e vagas são exemplos e serão substituídos por
-                dados definitivos antes da publicação.
+          {!DADOS_PUBLICAVEIS && (
+            <div className="mb-8 rounded-[--radius-card] border border-line-strong bg-surface-sunken px-4 py-3">
+              <p className="text-sm text-text-secondary">
+                Os programas são os oficiais de cada certificação. Para datas das
+                próximas turmas e valores, fale connosco — respondemos no mesmo dia.
               </p>
             </div>
           )}

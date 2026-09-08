@@ -10,7 +10,12 @@ import { Card, CardBody, CardFooter, CardHeader } from "@/components/ui/card";
 import { SeatsMeter } from "@/components/seats-indicator";
 import { computeSeats } from "@/lib/seats";
 import { formatAOA, formatDate } from "@/lib/utils";
-import { getCourseBySlug, getPublishedCourses, SEED_DATA } from "@/data/courses";
+import { ContactoCTA } from "@/components/contacto-cta";
+import {
+  getCourseBySlug,
+  getPublishedCourses,
+  DADOS_PUBLICAVEIS,
+} from "@/data/courses";
 import {
   AREA_LABEL,
   FEATURE_LABEL,
@@ -153,20 +158,24 @@ export default async function CursoPage({ params }: { params: Params }) {
                 <Clock className="size-4 text-text-muted" aria-hidden="true" />
                 <span className="tnum">{course.durationHours} horas de formação</span>
               </span>
-              <span className="inline-flex items-center gap-2">
-                <Users className="size-4 text-text-muted" aria-hidden="true" />
-                {edicoes.length === 1 ? "1 edição aberta" : `${edicoes.length} edições abertas`}
-              </span>
+              {DADOS_PUBLICAVEIS && (
+                <span className="inline-flex items-center gap-2">
+                  <Users className="size-4 text-text-muted" aria-hidden="true" />
+                  {edicoes.length === 1
+                    ? "1 edição aberta"
+                    : `${edicoes.length} edições abertas`}
+                </span>
+              )}
             </div>
           </div>
         </div>
 
         <div className="mx-auto max-w-6xl px-5 py-10">
-          {SEED_DATA && (
-            <div className="mb-8 rounded-[--radius-card] border border-accent-solid/40 bg-accent-soft px-4 py-3">
-              <p className="text-sm text-text-primary">
-                <strong>Conteúdo de demonstração.</strong> O programa é real e segue
-                os domínios oficiais do exame. Preços, datas e vagas são exemplos.
+          {!DADOS_PUBLICAVEIS && (
+            <div className="mb-8 rounded-[--radius-card] border border-line-strong bg-surface-sunken px-4 py-3">
+              <p className="text-sm text-text-secondary">
+                O programa abaixo é o oficial do exame. Para datas da próxima
+                turma e valores, fale connosco — respondemos no mesmo dia.
               </p>
             </div>
           )}
@@ -277,9 +286,11 @@ export default async function CursoPage({ params }: { params: Params }) {
 
             <aside className="flex flex-col gap-4 lg:sticky lg:top-24 lg:self-start">
               <h2 className="text-xl font-bold text-text-primary">
-                {edicoes.length ? "Próximas turmas" : "Turmas"}
+                {DADOS_PUBLICAVEIS && edicoes.length ? "Próximas turmas" : "Inscrições"}
               </h2>
-              {edicoes.length ? (
+              {!DADOS_PUBLICAVEIS ? (
+                <ContactoCTA assunto={course.title} />
+              ) : edicoes.length ? (
                 edicoes.map((e) => <EdicaoCard key={e.id} edicao={e} />)
               ) : (
                 <Card>

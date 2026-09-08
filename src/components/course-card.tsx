@@ -5,6 +5,7 @@ import { Card, CardBody, CardFooter } from "@/components/ui/card";
 import { SeatsBadge } from "@/components/seats-indicator";
 import { computeSeats } from "@/lib/seats";
 import { formatAOA, formatDateShort } from "@/lib/utils";
+import { DADOS_PUBLICAVEIS } from "@/data/courses";
 import {
   AREA_LABEL,
   LEVEL_LABEL,
@@ -74,31 +75,41 @@ export function CourseCard({ course }: { course: CourseWithEditions }) {
             <>
               <div className="flex items-center gap-2">
                 <CalendarDays className="size-4 shrink-0 text-text-muted" aria-hidden="true" />
-                <dd className="tnum">Início a {formatDateShort(edicao.startDate)}</dd>
+                <dd className={DADOS_PUBLICAVEIS ? "tnum" : undefined}>
+                  {DADOS_PUBLICAVEIS
+                    ? `Início a ${formatDateShort(edicao.startDate)}`
+                    : "Datas sob consulta"}
+                </dd>
               </div>
               <div className="flex items-center gap-2">
                 <MapPin className="size-4 shrink-0 text-text-muted" aria-hidden="true" />
                 <dd>
                   {MODALITY_LABEL[edicao.modality]}
-                  {edicao.location ? ` · ${edicao.location}` : ""}
+                  {DADOS_PUBLICAVEIS && edicao.location ? ` · ${edicao.location}` : ""}
                 </dd>
               </div>
             </>
           )}
         </dl>
 
-        <div className="mt-auto pt-2">
-          {seats ? (
-            <SeatsBadge seats={seats} />
-          ) : (
-            <Badge tone="neutral">Sem edições agendadas</Badge>
-          )}
-        </div>
+        {DADOS_PUBLICAVEIS && (
+          <div className="mt-auto pt-2">
+            {seats ? (
+              <SeatsBadge seats={seats} />
+            ) : (
+              <Badge tone="neutral">Sem edições agendadas</Badge>
+            )}
+          </div>
+        )}
       </CardBody>
 
       <CardFooter className="justify-between">
         <div className="flex flex-col">
-          {desde !== null ? (
+          {!DADOS_PUBLICAVEIS ? (
+            <span className="text-sm font-semibold text-text-secondary">
+              Preço sob consulta
+            </span>
+          ) : desde !== null ? (
             <>
               <span className="text-xs text-text-muted">desde</span>
               <span className="font-display text-lg font-bold text-text-primary tnum">
