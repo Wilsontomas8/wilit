@@ -1,0 +1,232 @@
+@import "tailwindcss";
+
+/* ==========================================================================
+   WIL IT — Tokens institucionais
+   Paleta aprovada: #185FA5 (azul principal) · #042C53 (azul escuro) · #EF9F27 (laranja)
+   Regra do WP-A.02: nenhuma cor literal fora deste ficheiro.
+   ========================================================================== */
+
+@theme {
+  /* -- Marca ------------------------------------------------------------- */
+  --color-brand-50:  #eef5fc;
+  --color-brand-100: #d8e8f7;
+  --color-brand-200: #b3d0ee;
+  --color-brand-300: #7fb0e1;
+  --color-brand-400: #4a8bd0;
+  --color-brand-500: #185fa5;  /* azul principal */
+  --color-brand-600: #14528f;
+  --color-brand-700: #0f3f70;
+  --color-brand-800: #093253;
+  --color-brand-900: #042c53;  /* azul escuro */
+  --color-brand-950: #021c36;
+
+  /* -- Realce ------------------------------------------------------------ */
+  --color-accent-50:  #fef8ec;
+  --color-accent-100: #fbedd0;
+  --color-accent-200: #f7dca1;
+  --color-accent-300: #f3c469;
+  --color-accent-400: #ef9f27;  /* laranja institucional */
+  --color-accent-500: #db8a15;
+  --color-accent-600: #b86e10;
+  --color-accent-700: #8f5411;
+  --color-accent-800: #6b4014;
+  --color-accent-900: #4a2d10;
+
+  /* -- Neutros (enviesados para o azul da marca) -------------------------- */
+  --color-ink-50:  #f5f8fb;
+  --color-ink-100: #e9eff6;
+  --color-ink-200: #d5e0ec;
+  --color-ink-300: #b4c5d9;
+  --color-ink-400: #8ba1bb;
+  --color-ink-500: #6a8098;
+  --color-ink-600: #52657a;
+  --color-ink-700: #3f4f60;
+  --color-ink-800: #2a3644;
+  --color-ink-900: #182430;
+  --color-ink-950: #0b1420;
+
+  /* -- Semânticos (estado, independentes do realce) ----------------------- */
+  --color-ok-soft:   #dff2ea;
+  --color-ok:        #147553;
+  --color-ok-strong: #0e5c41;
+  --color-warn-soft:   #fbeed6;
+  --color-warn:        #a86c10;
+  --color-warn-strong: #8a5709;
+  --color-crit-soft:   #f9e3e3;
+  --color-crit:        #a83232;
+  --color-crit-strong: #8a2727;
+
+  /* -- Tipografia --------------------------------------------------------- */
+  --font-sans: "Source Sans 3", ui-sans-serif, system-ui, "Segoe UI", sans-serif;
+  --font-display: "Archivo Variable", "Source Sans 3", ui-sans-serif, system-ui, sans-serif;
+
+  /* -- Raios e sombras ---------------------------------------------------- */
+  --radius-card: 0.625rem;
+  --radius-control: 0.5rem;
+
+  --shadow-panel: 0 1px 2px rgba(4, 44, 83, 0.06), 0 12px 32px -16px rgba(4, 44, 83, 0.24);
+  --shadow-raised: 0 1px 2px rgba(4, 44, 83, 0.08), 0 4px 12px -6px rgba(4, 44, 83, 0.20);
+}
+
+/* ==========================================================================
+   Papéis semânticos por tema.
+   Todos declarados em :root primeiro; os blocos de tema apenas os redefinem.
+   ========================================================================== */
+
+:root {
+  --surface-page: var(--color-ink-50);
+  --surface-card: #ffffff;
+  --surface-sunken: var(--color-ink-100);
+  --surface-inverse: var(--color-brand-900);
+
+  --text-primary: var(--color-ink-950);
+  --text-secondary: var(--color-ink-600);
+  --text-muted: var(--color-ink-500);
+  --text-on-brand: #ffffff;
+  --text-on-accent: #3d2a08;
+
+  --line-subtle: var(--color-ink-200);
+  --line-strong: var(--color-ink-300);
+
+  --brand-solid: var(--color-brand-500);
+  --brand-solid-hover: var(--color-brand-600);
+  --brand-soft: var(--color-brand-50);
+  --brand-text: var(--color-brand-600);
+
+  --accent-solid: var(--color-accent-400);
+  --accent-soft: var(--color-accent-50);
+  --accent-text: var(--color-accent-700);
+
+  --focus-ring: var(--color-accent-400);
+
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --surface-page: #061321;
+    --surface-card: #0d1f31;
+    --surface-sunken: #0a1a2a;
+    --surface-inverse: #f5f8fb;
+
+    --text-primary: var(--color-ink-100);
+    --text-secondary: var(--color-ink-300);
+    --text-muted: var(--color-ink-400);
+    --text-on-brand: #ffffff;
+    --text-on-accent: #3d2a08;
+
+    --line-subtle: #1c3247;
+    --line-strong: #2a4763;
+
+    --brand-solid: var(--color-brand-400);
+    --brand-solid-hover: var(--color-brand-300);
+    --brand-soft: #0f2c47;
+    --brand-text: var(--color-brand-300);
+
+    --accent-solid: var(--color-accent-400);
+    --accent-soft: #3a2b10;
+    --accent-text: var(--color-accent-300);
+
+    --focus-ring: var(--color-accent-300);
+
+    color-scheme: dark;
+  }
+}
+
+:root[data-theme="dark"] {
+  --surface-page: #061321;
+  --surface-card: #0d1f31;
+  --surface-sunken: #0a1a2a;
+  --surface-inverse: #f5f8fb;
+
+  --text-primary: var(--color-ink-100);
+  --text-secondary: var(--color-ink-300);
+  --text-muted: var(--color-ink-400);
+  --text-on-brand: #ffffff;
+  --text-on-accent: #3d2a08;
+
+  --line-subtle: #1c3247;
+  --line-strong: #2a4763;
+
+  --brand-solid: var(--color-brand-400);
+  --brand-solid-hover: var(--color-brand-300);
+  --brand-soft: #0f2c47;
+  --brand-text: var(--color-brand-300);
+
+  --accent-solid: var(--color-accent-400);
+  --accent-soft: #3a2b10;
+  --accent-text: var(--color-accent-300);
+
+  --focus-ring: var(--color-accent-300);
+
+  color-scheme: dark;
+}
+
+/* Expõe os papéis semânticos como utilitários Tailwind */
+@theme inline {
+  --color-surface-page: var(--surface-page);
+  --color-surface-card: var(--surface-card);
+  --color-surface-sunken: var(--surface-sunken);
+  --color-surface-inverse: var(--surface-inverse);
+
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-text-muted: var(--text-muted);
+  --color-text-on-brand: var(--text-on-brand);
+  --color-text-on-accent: var(--text-on-accent);
+
+  --color-line-subtle: var(--line-subtle);
+  --color-line-strong: var(--line-strong);
+
+  --color-brand-solid: var(--brand-solid);
+  --color-brand-solid-hover: var(--brand-solid-hover);
+  --color-brand-soft: var(--brand-soft);
+  --color-brand-text: var(--brand-text);
+
+  --color-accent-solid: var(--accent-solid);
+  --color-accent-soft: var(--accent-soft);
+  --color-accent-text: var(--accent-text);
+}
+
+/* ==========================================================================
+   Base
+   ========================================================================== */
+
+@layer base {
+  * {
+    border-color: var(--line-subtle);
+  }
+
+  body {
+    background-color: var(--surface-page);
+    color: var(--text-primary);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    text-wrap: balance;
+    letter-spacing: -0.02em;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--focus-ring);
+    outline-offset: 2px;
+  }
+
+  /* Tabular para tudo o que alinha em coluna: preços, vagas, datas */
+  .tnum {
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
