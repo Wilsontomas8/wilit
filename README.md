@@ -12,11 +12,14 @@ cursos, vagas disponíveis e pré-inscrições.
 | WP-A.03 | Contratos de dados (Zod) | **Concluído** |
 | WP-A.04 | Catálogo e página de curso | **Concluído** |
 | WP-A.05 | Formulário de pré-inscrição | **Concluído** |
+| WP-A.06 | Base de dados e schema | Em curso — schema aplicado, falta seed |
+| WP-A.07 | Admin com CRUD de todos os módulos | Por iniciar |
 
 ## Stack
 
 - **Next.js 16** (App Router) + **React 19** + **TypeScript** em modo estrito
 - **Tailwind CSS 4** — tokens em `src/app/globals.css`
+- **Drizzle ORM** + **PostgreSQL** (Neon no plano gratuito)
 - **Zod** para contratos, **react-hook-form** para formulários
 - **Lucide** para ícones, **next-themes** para tema claro/escuro
 - **Playwright** para testes ponta a ponta
@@ -44,6 +47,12 @@ papéis. Mudar o tema é redefinir tokens, não reescrever componentes.
 `prefers-color-scheme: dark` redefine os tokens sob `:root:not([data-theme="light"])`; e
 `:root[data-theme="dark"]` redefine-os outra vez para o alternador manual ganhar nos dois
 sentidos. Quem não escolheu tema vê o documento sem atributo, e só a media query o separa.
+
+**Drizzle em vez de Prisma.** O SoW previa Prisma, mas o alojamento passou a
+ser serverless no Vercel, onde o motor binário do Prisma pesa no arranque a
+frio. O Drizzle é TypeScript puro, sem binários, e tem driver oficial para o
+Neon. A versão estável do Prisma também não é instalável neste ambiente, o que
+confirmou a decisão em vez de a motivar.
 
 **Fontes auto-alojadas.** Archivo e Source Sans 3 vêm de `@fontsource`, não de
 `next/font/google`. Duas razões: o build deixa de depender de rede externa, e nenhum
