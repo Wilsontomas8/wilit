@@ -42,3 +42,4 @@ next-env.d.ts
 
 # ferramenta local de captura de ecrã
 shot.mjs
+dbg.mjs

@@ -11,7 +11,7 @@ cursos, vagas disponíveis e pré-inscrições.
 | WP-A.02 | Base do projecto e design system | **Concluído** |
 | WP-A.03 | Contratos de dados (Zod) | **Concluído** |
 | WP-A.04 | Catálogo e página de curso | **Concluído** |
-| WP-A.05 | Formulário de pré-inscrição | Por iniciar |
+| WP-A.05 | Formulário de pré-inscrição | **Concluído** |
 
 ## Stack
 
